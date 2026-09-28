@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Bus Ticket Booking</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+        }
+
+        header {
+            background-color: #d71920;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        .booking-box {
+            width: 80%;
+            max-width: 900px;
+            margin: 50px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .booking-box h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 15px;
+            align-items: end;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .form-group select,
+        .form-group input {
+            padding: 12px;
+            width: 180px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 15px;
+        }
+
+        .search-button {
+            padding: 12px 25px;
+            background-color: #d71920;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .search-button:hover {
+            background-color: #b9151b;
+        }
+
+        #bus-list {
+            width: 80%;
+            max-width: 900px;
+            margin: 30px auto;
+            display: none;
+        }
+
+        .bus-card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .bus-card h3 {
+            margin-top: 0;
+        }
+
+        .bus-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .select-button {
+            padding: 10px 20px;
+            background-color: #d71920;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .select-button:hover {
+            background-color: #b9151b;
+        }
+
+        /* Seat section */
+
+        #seat-section {
+            width: 80%;
+            max-width: 900px;
+            margin: 30px auto;
+        }
+
+        #selected-bus-info {
+            text-align: center;
+        }
+
+        #seat-layout {
+            display: grid;
+            grid-template-columns: repeat(4, 60px);
+            gap: 12px;
+            justify-content: center;
+            margin: 30px 0;
+        }
+
+        .seat {
+            width: 60px;
+            height: 45px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f1f1f1;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .seat:hover {
+            background-color: #ddd;
+        }
+
+        .seat.selected {
+            background-color: #d71920;
+            color: white;
+        }
+
+        .seat-summary {
+            text-align: center;
+        }
+
+        .seat-summary p {
+            font-size: 18px;
+        }
+
+        /* Passenger section */
+
+        #passenger-section {
+            width: 80%;
+            max-width: 600px;
+            margin: 30px auto;
+        }
+
+        .passenger-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .passenger-form label {
+            font-weight: bold;
+        }
+
+        .passenger-form input {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 15px;
+        }
+
+        /* Confirmation */
+
+        #confirmation-section {
+            width: 80%;
+            max-width: 600px;
+            margin: 30px auto;
+        }
+
+        .confirmation {
+            text-align: center;
+            border: 2px solid #d71920;
+            padding: 25px;
+            border-radius: 10px;
+        }
+
+        .confirmation h2 {
+            color: #d71920;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <header>
+
+        <h1>🚌 Bus Ticket Booking</h1>
+
+        <p>Book your bus tickets easily</p>
+
+    </header>
+
+
+    <!-- Search -->
+
+    <div class="booking-box">
+
+        <h2>Search Buses</h2>
+
+        <div class="search-form">
+
+            <div class="form-group">
+
+                <label for="from">From</label>
+
+                <select id="from">
+
+                    <option value="">Select City</option>
+                    <option value="Bangalore">Bangalore</option>
+                    <option value="Mysore">Mysore</option>
+                    <option value="Chennai">Chennai</option>
+                    <option value="Hyderabad">Hyderabad</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="to">To</label>
+
+                <select id="to">
+
+                    <option value="">Select City</option>
+                    <option value="Bangalore">Bangalore</option>
+                    <option value="Mysore">Mysore</option>
+                    <option value="Chennai">Chennai</option>
+                    <option value="Hyderabad">Hyderabad</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="date">Date</label>
+
+                <input type="date" id="date">
+
+            </div>
+
+
+            <button
+                class="search-button"
+                onclick="searchBuses()">
+                Search Buses
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- Bus Results -->
+
+    <div id="bus-list"></div>
+
+
+    <!-- Seat Selection -->
+
+    <div id="seat-section" style="display: none;">
+
+        <div class="booking-box">
+
+            <h2>Select Your Seats</h2>
+
+            <div id="selected-bus-info"></div>
+
+            <div id="seat-layout"></div>
+
+            <div class="seat-summary">
+
+                <p>
+                    Selected Seats:
+                    <span id="selected-seats">None</span>
+                </p>
+
+                <p>
+                    Total Amount: ₹
+                    <span id="total-price">0</span>
+                </p>
+
+                <button
+                    class="search-button"
+                    onclick="continueToPassenger()">
+                    Continue
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Passenger Details -->
+
+    <div id="passenger-section" style="display: none;">
+
+        <div class="booking-box">
+
+            <h2>Passenger Details</h2>
+
+            <div class="passenger-form">
+
+                <label for="passenger-name">
+                    Name
+                </label>
+
+                <input
+                    type="text"
+                    id="passenger-name"
+                    placeholder="Enter your name"
+                >
+
+
+                <label for="passenger-mobile">
+                    Mobile Number
+                </label>
+
+                <input
+                    type="tel"
+                    id="passenger-mobile"
+                    placeholder="Enter your mobile number"
+                >
+
+
+                <label for="passenger-email">
+                    Email ID
+                </label>
+
+                <input
+                    type="email"
+                    id="passenger-email"
+                    placeholder="Enter your email"
+                >
+
+
+                <button
+                    class="search-button"
+                    onclick="confirmBooking()">
+                    Confirm Booking
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Booking Confirmation -->
+
+    <div
+        id="confirmation-section"
+        style="display: none;">
+
+        <div class="booking-box">
+
+            <div class="confirmation">
+
+                <h2>🎉 Booking Confirmed!</h2>
+
+                <p>
+                    <strong>Booking ID:</strong>
+                    <span id="booking-id"></span>
+                </p>
+
+                <p>
+                    <strong>Passenger:</strong>
+                    <span id="confirmation-name"></span>
+                </p>
+
+                <p>
+                    <strong>Bus:</strong>
+                    <span id="confirmation-bus"></span>
+                </p>
+
+                <p>
+                    <strong>Route:</strong>
+                    <span id="confirmation-route"></span>
+                </p>
+
+                <p>
+                    <strong>Travel Date:</strong>
+                    <span id="confirmation-date"></span>
+                </p>
+
+                <p>
+                    <strong>Seats:</strong>
+                    <span id="confirmation-seats"></span>
+                </p>
+
+                <p>
+                    <strong>Total Amount:</strong>
+                    ₹<span id="confirmation-price"></span>
+                </p>
+
+                <p>
+                    Thank you for booking with us! 🚌
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- JavaScript -->
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+
+</body>
+
+</html>
